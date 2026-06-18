@@ -259,9 +259,10 @@ export default function App() {
         </div>
       )}
 
-      {/* Card */}
+      {/* Card + Buttons — all in one block, directly below categories */}
       {phase === "card" && card && (
-        <div style={{ display:"flex", flexDirection:"column", gap:"8px" }}>
+        <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
+
           {/* Progress */}
           <div>
             <div style={{ background:"#dde6f0", borderRadius:"6px", height:"4px", overflow:"hidden" }}>
@@ -272,22 +273,20 @@ export default function App() {
             </div>
           </div>
 
-          {/* CARD — fixed height 220px, always leaves room for buttons */}
+          {/* Card */}
           <div
             onClick={() => setFlipped(f => !f)}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
-            style={{ cursor:"pointer", perspective:"1000px", height:"220px", flexShrink:0 }}
+            style={{ cursor:"pointer", perspective:"1000px", height:"240px" }}
           >
             <div style={{ position:"relative", height:"100%", transformStyle:"preserve-3d", transition:"transform 0.4s", transform: flipped ? "rotateY(180deg)" : "none" }}>
-              {/* Front */}
               <div style={{ position:"absolute", width:"100%", height:"100%", backfaceVisibility:"hidden", background:"white", borderRadius:"14px", padding:"16px", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", boxShadow:"0 4px 16px rgba(0,0,0,0.09)", border:"2px solid #dde6f0" }}>
                 <div style={{ fontSize:"9px", fontWeight:"600", textTransform:"uppercase", letterSpacing:"1px", color:"#bbb", marginBottom:"8px" }}>Frage</div>
                 <div style={{ fontSize:"14px", fontWeight:"700", color:co.dark, lineHeight:"1.4" }}>{card.q}</div>
                 <div style={{ fontSize:"10px", color:"#ccc", marginTop:"10px" }}>Tippe zum Umdrehen</div>
               </div>
-              {/* Back */}
-              <div style={{ position:"absolute", width:"100%", height:"100%", backfaceVisibility:"hidden", background:co.dark, borderRadius:"14px", padding:"12px 14px", display:"flex", flexDirection:"column", transform:"rotateY(180deg)", boxShadow:"0 4px 16px rgba(0,0,0,0.12)", overflow:"hidden" }}>
+              <div style={{ position:"absolute", width:"100%", height:"100%", backfaceVisibility:"hidden", background:co.dark, borderRadius:"14px", padding:"12px 14px", display:"flex", flexDirection:"column", transform:"rotateY(180deg)", overflow:"hidden" }}>
                 <div style={{ fontSize:"9px", fontWeight:"600", textTransform:"uppercase", letterSpacing:"1px", color:"rgba(255,255,255,0.4)", marginBottom:"3px" }}>Antwort</div>
                 <div style={{ fontSize:"9px", color:"rgba(255,255,255,0.55)", fontStyle:"italic", marginBottom:"5px", paddingBottom:"5px", borderBottom:"1px solid rgba(255,255,255,0.15)", lineHeight:"1.3", flexShrink:0 }}>{card.desc}</div>
                 <div style={{ fontSize:"11px", color:"white", lineHeight:"1.55", whiteSpace:"pre-line", overflow:"auto", flex:1 }}>{card.a}</div>
@@ -295,14 +294,7 @@ export default function App() {
             </div>
           </div>
 
-          {/* Spacer so card doesn't hide behind fixed buttons */}
-          <div style={{ height:"80px" }} />
-        </div>
-      )}
-
-      {/* FIXED BUTTONS — always at bottom of screen */}
-      {phase === "card" && card && (
-        <div style={{ position:"fixed", bottom:0, left:0, right:0, padding:"12px 16px 20px", background:co.bg, borderTop:"1px solid #dde6f0", zIndex:50 }}>
+          {/* Buttons — directly below card */}
           {!flipped ? (
             <button onClick={() => setFlipped(true)} style={{ width:"100%", background:co.dark, color:"white", border:"none", borderRadius:"12px", padding:"14px", fontSize:"15px", fontWeight:"600", cursor:"pointer" }}>
               Antwort zeigen 👁️
