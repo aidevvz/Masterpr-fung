@@ -295,7 +295,14 @@ export default function App() {
             </div>
           </div>
 
-          {/* Buttons — fixed below card */}
+          {/* Spacer so card doesn't hide behind fixed buttons */}
+          <div style={{ height:"80px" }} />
+        </div>
+      )}
+
+      {/* FIXED BUTTONS — always at bottom of screen */}
+      {phase === "card" && card && (
+        <div style={{ position:"fixed", bottom:0, left:0, right:0, padding:"12px 16px 20px", background:co.bg, borderTop:"1px solid #dde6f0", zIndex:50 }}>
           {!flipped ? (
             <button onClick={() => setFlipped(true)} style={{ width:"100%", background:co.dark, color:"white", border:"none", borderRadius:"12px", padding:"14px", fontSize:"15px", fontWeight:"600", cursor:"pointer" }}>
               Antwort zeigen 👁️
@@ -310,6 +317,7 @@ export default function App() {
               </button>
             </div>
           )}
+        </div>
         </div>
       )}
 
