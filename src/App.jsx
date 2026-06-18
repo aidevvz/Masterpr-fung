@@ -259,56 +259,58 @@ export default function App() {
         </div>
       )}
 
-      {/* Card + Buttons — all in one block, directly below categories */}
       {phase === "card" && card && (
-        <div style={{ display:"flex", flexDirection:"column", gap:"10px" }}>
+        <div style={{ display:"flex", flexDirection:"column", gap:"10px", marginTop:"8px" }}>
 
           {/* Progress */}
-          <div>
-            <div style={{ background:"#dde6f0", borderRadius:"6px", height:"4px", overflow:"hidden" }}>
-              <div style={{ background:co.mid, height:"100%", width:(idx/deck.length*100)+"%", transition:"width 0.3s", borderRadius:"6px" }} />
-            </div>
-            <div style={{ textAlign:"center", fontSize:"10px", color:"#888", marginTop:"3px" }}>
-              {idx+1}/{deck.length} — {cat} ({catKnown}/{catTotal})
-            </div>
+          <div style={{ background:"#dde6f0", borderRadius:"6px", height:"4px", overflow:"hidden" }}>
+            <div style={{ background:co.mid, height:"100%", width:(idx/deck.length*100)+"%", transition:"width 0.3s", borderRadius:"6px" }} />
+          </div>
+          <div style={{ textAlign:"center", fontSize:"10px", color:"#888" }}>
+            {idx+1}/{deck.length} — {cat} ({catKnown}/{catTotal})
           </div>
 
-          {/* Card */}
+          {/* Card — fixed height, centered */}
           <div
             onClick={() => setFlipped(f => !f)}
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
-            style={{ cursor:"pointer", perspective:"1000px", height:"240px" }}
+            style={{ cursor:"pointer", perspective:"1000px", height:"240px", width:"100%" }}
           >
-            <div style={{ position:"relative", height:"100%", transformStyle:"preserve-3d", transition:"transform 0.4s", transform: flipped ? "rotateY(180deg)" : "none" }}>
-              <div style={{ position:"absolute", width:"100%", height:"100%", backfaceVisibility:"hidden", background:"white", borderRadius:"14px", padding:"16px", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", boxShadow:"0 4px 16px rgba(0,0,0,0.09)", border:"2px solid #dde6f0" }}>
-                <div style={{ fontSize:"9px", fontWeight:"600", textTransform:"uppercase", letterSpacing:"1px", color:"#bbb", marginBottom:"8px" }}>Frage</div>
-                <div style={{ fontSize:"14px", fontWeight:"700", color:co.dark, lineHeight:"1.4" }}>{card.q}</div>
-                <div style={{ fontSize:"10px", color:"#ccc", marginTop:"10px" }}>Tippe zum Umdrehen</div>
+            <div style={{ position:"relative", width:"100%", height:"100%", transformStyle:"preserve-3d", transition:"transform 0.4s", transform: flipped ? "rotateY(180deg)" : "none" }}>
+              {/* Front */}
+              <div style={{ position:"absolute", inset:0, backfaceVisibility:"hidden", background:"white", borderRadius:"14px", padding:"20px", display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center", textAlign:"center", boxShadow:"0 2px 12px rgba(0,0,0,0.08)", border:"1.5px solid #dde6f0" }}>
+                <div style={{ fontSize:"9px", fontWeight:"600", textTransform:"uppercase", letterSpacing:"1px", color:"#bbb", marginBottom:"10px" }}>Frage</div>
+                <div style={{ fontSize:"15px", fontWeight:"700", color:co.dark, lineHeight:"1.4" }}>{card.q}</div>
+                <div style={{ fontSize:"10px", color:"#ccc", marginTop:"12px" }}>Tippe zum Umdrehen</div>
               </div>
-              <div style={{ position:"absolute", width:"100%", height:"100%", backfaceVisibility:"hidden", background:co.dark, borderRadius:"14px", padding:"12px 14px", display:"flex", flexDirection:"column", transform:"rotateY(180deg)", overflow:"hidden" }}>
-                <div style={{ fontSize:"9px", fontWeight:"600", textTransform:"uppercase", letterSpacing:"1px", color:"rgba(255,255,255,0.4)", marginBottom:"3px" }}>Antwort</div>
-                <div style={{ fontSize:"9px", color:"rgba(255,255,255,0.55)", fontStyle:"italic", marginBottom:"5px", paddingBottom:"5px", borderBottom:"1px solid rgba(255,255,255,0.15)", lineHeight:"1.3", flexShrink:0 }}>{card.desc}</div>
-                <div style={{ fontSize:"11px", color:"white", lineHeight:"1.55", whiteSpace:"pre-line", overflow:"auto", flex:1 }}>{card.a}</div>
+              {/* Back */}
+              <div style={{ position:"absolute", inset:0, backfaceVisibility:"hidden", background:co.dark, borderRadius:"14px", padding:"14px 16px", display:"flex", flexDirection:"column", transform:"rotateY(180deg)", overflow:"hidden" }}>
+                <div style={{ fontSize:"9px", fontWeight:"600", textTransform:"uppercase", letterSpacing:"1px", color:"rgba(255,255,255,0.4)", marginBottom:"4px" }}>Antwort</div>
+                <div style={{ fontSize:"9px", color:"rgba(255,255,255,0.55)", fontStyle:"italic", marginBottom:"6px", paddingBottom:"6px", borderBottom:"1px solid rgba(255,255,255,0.15)", lineHeight:"1.3", flexShrink:0 }}>{card.desc}</div>
+                <div style={{ fontSize:"11px", color:"white", lineHeight:"1.6", whiteSpace:"pre-line", overflowY:"auto", flex:1 }}>{card.a}</div>
               </div>
             </div>
           </div>
 
-          {/* Buttons — directly below card */}
-          {!flipped ? (
-            <button onClick={() => setFlipped(true)} style={{ width:"100%", background:co.dark, color:"white", border:"none", borderRadius:"12px", padding:"14px", fontSize:"15px", fontWeight:"600", cursor:"pointer" }}>
-              Antwort zeigen 👁️
-            </button>
-          ) : (
-            <div style={{ display:"flex", gap:"10px" }}>
-              <button onClick={() => mark(false)} style={{ flex:1, background:"#fee2e2", color:co.red, border:"none", borderRadius:"12px", padding:"14px", fontSize:"15px", fontWeight:"700", cursor:"pointer" }}>
-                ❌ Nochmal
+          {/* Buttons — 16px below card */}
+          <div style={{ marginTop:"6px" }}>
+            {!flipped ? (
+              <button onClick={() => setFlipped(true)} style={{ width:"100%", background:co.dark, color:"white", border:"none", borderRadius:"12px", padding:"15px", fontSize:"15px", fontWeight:"600", cursor:"pointer" }}>
+                Antwort zeigen 👁️
               </button>
-              <button onClick={() => mark(true)} style={{ flex:1, background:"#dcfce7", color:co.green, border:"none", borderRadius:"12px", padding:"14px", fontSize:"15px", fontWeight:"700", cursor:"pointer" }}>
-                ✅ Gewusst
-              </button>
-            </div>
-          )}
+            ) : (
+              <div style={{ display:"flex", gap:"10px" }}>
+                <button onClick={() => mark(false)} style={{ flex:1, background:"#fee2e2", color:co.red, border:"none", borderRadius:"12px", padding:"15px", fontSize:"15px", fontWeight:"700", cursor:"pointer" }}>
+                  ❌ Nochmal
+                </button>
+                <button onClick={() => mark(true)} style={{ flex:1, background:"#dcfce7", color:co.green, border:"none", borderRadius:"12px", padding:"15px", fontSize:"15px", fontWeight:"700", cursor:"pointer" }}>
+                  ✅ Gewusst
+                </button>
+              </div>
+            )}
+          </div>
+
         </div>
       )}
 
